@@ -6,6 +6,7 @@ import Paper from "@mui/material/Paper";
 import { ServiceItem } from "./ServiceItem";
 import { useSelector } from "react-redux";
 import { IRootState, TService } from "../reducers/appReducer";
+import { ISearchState } from "../reducers/searchReducer";
 
 const ServicesTable = () => {
   const serviceItems = useSelector(
@@ -13,7 +14,7 @@ const ServicesTable = () => {
   );
 
   const searchQuery = useSelector(
-    ({ app: { searchQuery } }: IRootState) => searchQuery
+    ({ search: { query } }: ISearchState) => query
   );
   const servicesItemsToRender = searchQuery
     ? serviceItems.filter((item: TService) =>

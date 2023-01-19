@@ -3,15 +3,15 @@ import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import { useSelector, useDispatch } from "react-redux";
 import { ServicesTable } from "./components/Services";
-import { IRootState } from "./reducers/appReducer";
+import { handleAddService } from "./actions/formActions";
+import { handleSearchQuery } from "./actions/searchActions";
 import {
-  handleAddService,
   handleEditItem,
   handleEditMode,
   handleSaveEditItem,
-  handleSearchQuery,
-} from "./actions";
+} from "./actions/editActions";
 import { v4 as uuidv4 } from "uuid";
+import { IEditRootState } from "./reducers/editReducer";
 
 const App = () => {
   type TFieldValuesType = {
@@ -19,9 +19,12 @@ const App = () => {
     price: string | number;
   };
   const dispatch = useDispatch();
-  const isEditMode = useSelector(({ app }: IRootState) => app.isInEditMode);
+
+  const isEditMode = useSelector(
+    ({ edit: { isInEditMode } }: IEditRootState) => isInEditMode
+  );
   const editItem = useSelector(
-    ({ app: { itemToEdit } }: IRootState) => itemToEdit
+    ({ edit: { itemToEdit } }: IEditRootState) => itemToEdit
   );
   const [fieldValues, setFieldValues] = useState<TFieldValuesType>({
     title: "",
