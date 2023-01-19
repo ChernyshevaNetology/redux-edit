@@ -5,7 +5,7 @@ import TableContainer from "@mui/material/TableContainer";
 import Paper from "@mui/material/Paper";
 import { ServiceItem } from "./ServiceItem";
 import { useSelector } from "react-redux";
-import { IRootState, TService } from "../reducers/appReducer";
+import { IRootState, TService } from "../reducers/formReducer";
 import { ISearchState } from "../reducers/searchReducer";
 
 const ServicesTable = () => {

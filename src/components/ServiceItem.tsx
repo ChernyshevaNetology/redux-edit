@@ -6,7 +6,7 @@ import TableCell from "@mui/material/TableCell";
 import { handleDeleteService } from "../actions/formActions";
 import { handleEditItem, handleEditMode } from "../actions/editActions";
 import { useDispatch, useSelector } from "react-redux";
-import { TService } from "../reducers/appReducer";
+import { TService } from "../reducers/formReducer";
 import { IEditRootState } from "../reducers/editReducer";
 
 function ServiceItem({ title, price, id }: TService) {
@@ -32,10 +32,10 @@ function ServiceItem({ title, price, id }: TService) {
       </TableCell>
       <TableCell>{price}</TableCell>
       <TableCell>
-        <EditIcon onClick={onSetEdit} className={"icon"} />
+        {!isEditMode && <EditIcon onClick={onSetEdit} className={"icon"} />}
       </TableCell>
       <TableCell>
-        <ClearIcon onClick={onItemRemove} className={"icon"} />
+        {!isEditMode && <ClearIcon onClick={onItemRemove} className={"icon"} />}
       </TableCell>
     </TableRow>
   );

@@ -1,4 +1,5 @@
 import { EFormActions } from "../actions/formActions";
+import { EEditActions } from "../actions/editActions";
 
 export type TService = {
   id: string;
@@ -58,7 +59,7 @@ const initialState: IStateProps = {
   services,
 };
 
-const appReducer = (
+const formReducer = (
   state: IStateProps = initialState,
   { type, payload }: TActionType
 ): IStateProps => {
@@ -83,4 +84,4 @@ const appReducer = (
   }
 };
 
-export { appReducer };
+export { formReducer };

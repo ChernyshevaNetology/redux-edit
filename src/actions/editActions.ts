@@ -1,4 +1,4 @@
-import { TService } from "../reducers/appReducer";
+import { TService } from "../reducers/formReducer";
 
 export enum EEditActions {
   SET_EDIT_MODE = "SET_EDIT_MODE",

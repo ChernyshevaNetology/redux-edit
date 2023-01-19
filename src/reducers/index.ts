@@ -1,11 +1,11 @@
 import { combineReducers } from "redux";
 
-import { appReducer } from "./appReducer";
+import { formReducer } from "./formReducer";
 import { searchReducer } from "./searchReducer";
 import { editReducer } from "./editReducer";
 
 const rootReducer = combineReducers({
-  app: appReducer,
+  app: formReducer,
   search: searchReducer,
   edit: editReducer,
 });

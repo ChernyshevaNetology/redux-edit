@@ -55,11 +55,13 @@ const App = () => {
   }, [isEditMode]);
 
   const onAdd = () => {
-    if (!fieldValues.title && !fieldValues.price) {
+    if (!fieldValues.title || !fieldValues.price) {
       return;
     }
 
     if (isEditMode && editItem) {
+      console.log("попали в сохранения редактируемого айтема");
+      console.log(editItem.id, fieldValues.title, +fieldValues.price);
       dispatch(
         handleSaveEditItem({
           id: editItem.id,

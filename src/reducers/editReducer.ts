@@ -1,4 +1,4 @@
-import { TService, services } from "./appReducer";
+import { TService, services } from "./formReducer";
 import { EEditActions } from "../actions/editActions";
 
 export interface IEditRootState {
@@ -55,8 +55,11 @@ const editReducer = (
         ...state,
         services: state.services.map((item) => {
           if (item.id === payload.item.id) {
+            console.log("payload равен id айтема", payload.item.id === item.id);
+            console.log("payload item", payload.item);
             return payload.item;
           }
+          console.log("state", state);
           return item;
         }),
         itemToEdit: null,

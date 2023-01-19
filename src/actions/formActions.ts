@@ -1,4 +1,4 @@
-import { TService } from "../reducers/appReducer";
+import { TService } from "../reducers/formReducer";
 
 export enum EFormActions {
   ADD_SERVICE = "ADD_SERVICE",
