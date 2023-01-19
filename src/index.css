@@ -1,0 +1,40 @@
+.root{
+  max-width: 1170px;
+  margin: 100px auto;
+}
+
+.form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#outlined-basic {
+  height: 20px;
+}
+
+.btn {
+  margin-left: 10px !important;
+  height: 40px;
+}
+
+.service__items {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.service__item {
+  display: flex;
+}
+
+.icon {
+  cursor: pointer;
+}
+
+.services__table {
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+}
