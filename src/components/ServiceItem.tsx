@@ -4,10 +4,10 @@ import ClearIcon from "@mui/icons-material/Clear";
 import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 import { handleDeleteService } from "../actions/formActions";
-import { handleEditItem, handleEditMode } from "../actions/editActions";
+import { handleEditItem, handleEditMode } from "../actions/formActions";
 import { useDispatch, useSelector } from "react-redux";
 import { TService } from "../reducers/formReducer";
-import { IEditRootState } from "../reducers/editReducer";
+import { IRootState } from "../reducers/formReducer";
 
 function ServiceItem({ title, price, id }: TService) {
   const dispatch = useDispatch();
@@ -15,7 +15,7 @@ function ServiceItem({ title, price, id }: TService) {
   const onItemRemove = () => dispatch(handleDeleteService(id));
 
   const isEditMode = useSelector(
-    ({ edit: { isInEditMode } }: IEditRootState) => isInEditMode
+    ({ app: { isInEditMode } }: IRootState) => isInEditMode
   );
 
   const onSetEdit = () => {

@@ -9,9 +9,9 @@ import {
   handleEditItem,
   handleEditMode,
   handleSaveEditItem,
-} from "./actions/editActions";
+} from "./actions/formActions";
 import { v4 as uuidv4 } from "uuid";
-import { IEditRootState } from "./reducers/editReducer";
+import { IRootState } from "./reducers/formReducer";
 
 const App = () => {
   type TFieldValuesType = {
@@ -21,10 +21,10 @@ const App = () => {
   const dispatch = useDispatch();
 
   const isEditMode = useSelector(
-    ({ edit: { isInEditMode } }: IEditRootState) => isInEditMode
+    ({ app: { isInEditMode } }: IRootState) => isInEditMode
   );
   const editItem = useSelector(
-    ({ edit: { itemToEdit } }: IEditRootState) => itemToEdit
+    ({ app: { itemToEdit } }: IRootState) => itemToEdit
   );
   const [fieldValues, setFieldValues] = useState<TFieldValuesType>({
     title: "",

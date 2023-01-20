@@ -1,5 +1,4 @@
 import { EFormActions } from "../actions/formActions";
-import { EEditActions } from "../actions/editActions";
 
 export type TService = {
   id: string;
@@ -13,6 +12,8 @@ export interface IRootState {
 
 export interface IStateProps {
   services: TService[];
+  isInEditMode: boolean;
+  itemToEdit: TService | null;
 }
 
 type TAddItemAction = {
@@ -25,7 +26,27 @@ type TDeleteItemAction = {
   payload: { id: string };
 };
 
-type TActionType = TAddItemAction | TDeleteItemAction;
+type TSetEditMode = {
+  type: EFormActions.SET_EDIT_MODE;
+  payload: boolean;
+};
+
+type TSetEditItem = {
+  type: EFormActions.SET_EDIT_ITEM;
+  payload: { item: TService };
+};
+
+type TSaveEditItem = {
+  type: EFormActions.SAVE_EDIT_ITEM;
+  payload: { item: TService };
+};
+
+type TActionType =
+  | TAddItemAction
+  | TDeleteItemAction
+  | TSetEditMode
+  | TSetEditItem
+  | TSaveEditItem;
 
 export const services = [
   {
@@ -57,6 +78,8 @@ export const services = [
 
 const initialState: IStateProps = {
   services,
+  isInEditMode: false,
+  itemToEdit: null,
 };
 
 const formReducer = (
@@ -78,6 +101,29 @@ const formReducer = (
       return {
         ...state,
         services: state.services.filter((item) => item.id !== payload.id),
+      };
+    case EFormActions.SET_EDIT_MODE:
+      return {
+        ...state,
+        isInEditMode: !state.isInEditMode,
+        itemToEdit: state.isInEditMode ? state.itemToEdit : null,
+      };
+    case EFormActions.SET_EDIT_ITEM:
+      return {
+        ...state,
+        itemToEdit: payload.item,
+      };
+    case EFormActions.SAVE_EDIT_ITEM:
+      return {
+        ...state,
+        services: state.services.map((item) => {
+          if (item.id === payload.item.id) {
+            return payload.item;
+          }
+          return item;
+        }),
+        itemToEdit: null,
+        isInEditMode: false,
       };
     default:
       return state;
