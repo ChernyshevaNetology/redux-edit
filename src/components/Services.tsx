@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableContainer from "@mui/material/TableContainer";
@@ -7,6 +7,7 @@ import { ServiceItem } from "./ServiceItem";
 import { useSelector } from "react-redux";
 import { IRootState, TService } from "../reducers/formReducer";
 import { ISearchState } from "../reducers/searchReducer";
+import { handleSearch } from "../utils";
 
 const ServicesTable = () => {
   const serviceItems = useSelector(
@@ -18,24 +19,26 @@ const ServicesTable = () => {
   );
   const servicesItemsToRender = searchQuery
     ? serviceItems.filter((item: TService) =>
-        item.title.toLowerCase().startsWith(searchQuery.toLowerCase())
+        handleSearch(item.title, searchQuery)
       )
     : serviceItems;
 
   return (
-    <TableContainer
-      sx={{ maxWidth: 650, align: "center" }}
-      className={"table"}
-      component={Paper}
-    >
-      <Table aria-label="simple table">
-        <TableBody>
-          {servicesItemsToRender.map(({ id, title, price }: TService) => (
-            <ServiceItem key={id} title={title} price={price} id={id} />
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <div className="services__table">
+      <TableContainer
+        sx={{ maxWidth: 650, align: "center" }}
+        className={"table"}
+        component={Paper}
+      >
+        <Table aria-label="simple table">
+          <TableBody>
+            {servicesItemsToRender.map(({ id, title, price }: TService) => (
+              <ServiceItem key={id} title={title} price={price} id={id} />
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </div>
   );
 };
 

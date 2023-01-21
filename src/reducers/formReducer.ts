@@ -16,11 +16,6 @@ export interface IStateProps {
   itemToEdit: TService | null;
 }
 
-type TAddItemAction = {
-  type: EFormActions.ADD_SERVICE;
-  payload: { serviceItem: TService };
-};
-
 type TDeleteItemAction = {
   type: EFormActions.DELETE_SERVICE;
   payload: { id: string };
@@ -36,17 +31,12 @@ type TSetEditItem = {
   payload: { item: TService };
 };
 
-type TSaveEditItem = {
-  type: EFormActions.SAVE_EDIT_ITEM;
+type TSaveItem = {
+  type: EFormActions.SAVE_ITEM;
   payload: { item: TService };
 };
 
-type TActionType =
-  | TAddItemAction
-  | TDeleteItemAction
-  | TSetEditMode
-  | TSetEditItem
-  | TSaveEditItem;
+type TActionType = TDeleteItemAction | TSetEditMode | TSetEditItem | TSaveItem;
 
 export const services = [
   {
@@ -87,16 +77,30 @@ const formReducer = (
   { type, payload }: TActionType
 ): IStateProps => {
   switch (type) {
-    case EFormActions.ADD_SERVICE:
-      return {
-        ...state,
-        services: [
-          ...state.services,
-          {
-            ...payload.serviceItem,
-          },
-        ],
-      };
+    case EFormActions.SAVE_ITEM:
+      if (state.isInEditMode && state.itemToEdit) {
+        return {
+          ...state,
+          services: state.services.map((item) => {
+            if (item.id === payload.item.id) {
+              return payload.item;
+            }
+            return item;
+          }),
+          itemToEdit: null,
+          isInEditMode: false,
+        };
+      } else {
+        return {
+          ...state,
+          services: [
+            ...state.services,
+            {
+              ...payload.item,
+            },
+          ],
+        };
+      }
     case EFormActions.DELETE_SERVICE:
       return {
         ...state,
@@ -112,18 +116,6 @@ const formReducer = (
       return {
         ...state,
         itemToEdit: payload.item,
-      };
-    case EFormActions.SAVE_EDIT_ITEM:
-      return {
-        ...state,
-        services: state.services.map((item) => {
-          if (item.id === payload.item.id) {
-            return payload.item;
-          }
-          return item;
-        }),
-        itemToEdit: null,
-        isInEditMode: false,
       };
     default:
       return state;

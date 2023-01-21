@@ -3,15 +3,15 @@ import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import { useSelector, useDispatch } from "react-redux";
 import { ServicesTable } from "./components/Services";
-import { handleAddService } from "./actions/formActions";
 import { handleSearchQuery } from "./actions/searchActions";
 import {
   handleEditItem,
   handleEditMode,
-  handleSaveEditItem,
+  handleSaveItem,
 } from "./actions/formActions";
 import { v4 as uuidv4 } from "uuid";
 import { IRootState } from "./reducers/formReducer";
+import { ISearchState } from "./reducers/searchReducer";
 
 const App = () => {
   type TFieldValuesType = {
@@ -26,11 +26,14 @@ const App = () => {
   const editItem = useSelector(
     ({ app: { itemToEdit } }: IRootState) => itemToEdit
   );
+
+  const searchQuery = useSelector(
+    ({ search: { query } }: ISearchState) => query
+  );
   const [fieldValues, setFieldValues] = useState<TFieldValuesType>({
     title: "",
     price: "",
   });
-  const [searchQuery, setSearchQuery] = useState("");
 
   const onCancelEdit = () => {
     dispatch(handleEditMode(false));
@@ -41,7 +44,6 @@ const App = () => {
   const onFilter = ({
     target: { value },
   }: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchQuery(value);
     dispatch(handleSearchQuery(value));
   };
 
@@ -58,26 +60,13 @@ const App = () => {
     if (!fieldValues.title || !fieldValues.price) {
       return;
     }
-
-    if (isEditMode && editItem) {
-      console.log("попали в сохранения редактируемого айтема");
-      console.log(editItem.id, fieldValues.title, +fieldValues.price);
-      dispatch(
-        handleSaveEditItem({
-          id: editItem.id,
-          title: fieldValues.title,
-          price: +fieldValues.price,
-        })
-      );
-    } else {
-      dispatch(
-        handleAddService({
-          id: uuidv4(),
-          title: fieldValues.title,
-          price: +fieldValues.price,
-        })
-      );
-    }
+    dispatch(
+      handleSaveItem({
+        id: editItem?.id || uuidv4(),
+        title: fieldValues.title,
+        price: +fieldValues.price,
+      })
+    );
     setFieldValues({ title: "", price: "" });
   };
 
@@ -133,9 +122,7 @@ const App = () => {
           )}
         </>
       </div>
-      <div className="services__table">
-        <ServicesTable />
-      </div>
+      <ServicesTable />
     </div>
   );
 };

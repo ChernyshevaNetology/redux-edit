@@ -1,16 +1,15 @@
 import { TService } from "../reducers/formReducer";
 
 export enum EFormActions {
-  ADD_SERVICE = "ADD_SERVICE",
+  SAVE_ITEM = "SAVE_ITEM",
   DELETE_SERVICE = "DELETE_SERVICE",
   SET_EDIT_MODE = "SET_EDIT_MODE",
   SET_EDIT_ITEM = "SET_EDIT_ITEM",
-  SAVE_EDIT_ITEM = "SAVE_EDIT_ITEM",
 }
 
-export const handleAddService = (serviceItem: TService) => ({
-  type: EFormActions.ADD_SERVICE,
-  payload: { serviceItem },
+export const handleSaveItem = (item: TService | null) => ({
+  type: EFormActions.SAVE_ITEM,
+  payload: { item },
 });
 
 export const handleDeleteService = (id: string) => ({
@@ -25,10 +24,5 @@ export const handleEditMode = (editMode: boolean) => ({
 
 export const handleEditItem = (item: TService | null) => ({
   type: EFormActions.SET_EDIT_ITEM,
-  payload: { item },
-});
-
-export const handleSaveEditItem = (item: TService) => ({
-  type: EFormActions.SAVE_EDIT_ITEM,
   payload: { item },
 });
